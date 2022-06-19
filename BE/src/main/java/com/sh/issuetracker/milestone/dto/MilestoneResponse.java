@@ -1,13 +1,27 @@
 package com.sh.issuetracker.milestone.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import com.sh.issuetracker.milestone.Milestone;
 
-@Builder
-@Data
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Builder(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class MilestoneResponse {
 	private final Long id;
 	private final String title;
 	private final String description;
 	private final String completionDate;
+
+	public static MilestoneResponse from(Milestone milestone) {
+		return MilestoneResponse.builder()
+			.id(milestone.getId())
+			.title(milestone.getTitle())
+			.description(milestone.getDescription())
+			.completionDate(milestone.getCompletionDateStr())
+			.build();
+	}
 }

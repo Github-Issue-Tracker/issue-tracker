@@ -5,7 +5,6 @@ import com.sh.issuetracker.project.Project;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,7 +33,6 @@ public class Milestone {
 	private String milestoneTitle;
 	private String description;
 	private LocalDateTime completionDate;
-	@Column(name = "deleted")
 	private boolean isDeleted;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -50,16 +48,19 @@ public class Milestone {
 		this.project = project;
 	}
 
-	MilestoneResponse toDto() {
-		return MilestoneResponse.builder()
-			.id(this.milestoneId)
-			.title(this.milestoneTitle)
-			.description(this.description)
-			.completionDate(this.completionDate.toString())
-			.build();
+	public Long getId() {
+		return this.milestoneId;
 	}
 
-	Long getId() {
-		return this.milestoneId;
+	public String getTitle() {
+		return milestoneTitle;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getCompletionDateStr() {
+		return completionDate.toString();
 	}
 }

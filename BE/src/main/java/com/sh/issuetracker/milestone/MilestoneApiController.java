@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/issue-tracker/milestone")
+@RequestMapping("/api/issue-tracker/milestones")
 public class MilestoneApiController {
 	private final MilestoneService milestoneService;
 
