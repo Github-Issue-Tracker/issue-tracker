@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class MilestoneRequest {
-
 	@Getter
 	@NoArgsConstructor
 	public static class Creation {
