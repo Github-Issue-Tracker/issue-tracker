@@ -25,14 +25,14 @@ public class MilestoneService {
 		Project projectInfo = projectService.get(authUser.getProjectId());
 		Milestone milestone = creationRequest.toMilestone(projectInfo);
 		Milestone milestoneInfo = milestoneRepository.save(milestone);
-		return milestoneInfo.toDto();
+		return MilestoneResponse.from(milestoneInfo);
 	}
 
 	@Transactional(readOnly = true)
 	public List<MilestoneResponse> readAll(AuthUser authUser) {
-		List<Milestone> milestones = milestoneRepository.findAllByProjectProjectId(authUser.getProjectId());
+		List<Milestone> milestones = milestoneRepository.findAllByProjectId(authUser.getProjectId());
 		return milestones.stream()
-			.map(Milestone::toDto)
+			.map(MilestoneResponse::from)
 			.collect(Collectors.toList());
 	}
 }

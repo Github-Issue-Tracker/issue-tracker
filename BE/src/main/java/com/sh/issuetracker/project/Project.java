@@ -11,14 +11,15 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(of = "projectId")
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "issue_tracker_project")
 @Entity
 public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long projectId;
+	@Column(name = "project_id")
+	private Long id;
 
 	@Column(name = "project_name", nullable = false)
 	private String name;
