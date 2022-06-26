@@ -40,15 +40,24 @@ class IssueSearchRequestTest {
 		Matcher matcherOfValue = patternOfValue.matcher(behindSearchWords);
 
 		while (matcherOfKey.find() && matcherOfValue.find()) {
-			System.out.println(matcherOfKey.group(1) + " : " + matcherOfValue.group(1));
+			String key = matcherOfKey.group(1);
+			String value = matcherOfValue.group(1);
 
-			if (matcherOfKey.group(1) == null || matcherOfValue.group(1) == null)
+			if (key == null || value == null)
 				break;
+
+			if (value.indexOf('\"') > -1) {
+				value = value.replaceAll("\"", "");
+			}
+			System.out.println(key + " : " + value);
 		}
 
 		String lastKey = matcherOfKey.group(1);
 		int lastColonIdx = url.lastIndexOf(':');
 		String lastValue = url.substring(lastColonIdx);
+		if (lastValue.indexOf('\"') > -1) {
+			lastValue = lastValue.replaceAll("\"", "");
+		}
 		System.out.println(lastKey + " : " + lastValue);
 	}
 }

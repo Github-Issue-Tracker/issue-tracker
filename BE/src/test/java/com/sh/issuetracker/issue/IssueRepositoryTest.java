@@ -29,6 +29,7 @@ class IssueRepositoryTest {
 
 		assertThat(actual).extracting("status").contains(IssueStatus.OPEN.toString());
 		assertThat(actual).extracting("status").doesNotContain(IssueStatus.CLOSE.toString());
+		assertThat(actual).extracting("milestone").containsNull();
 	}
 
 	@Test
@@ -40,5 +41,14 @@ class IssueRepositoryTest {
 
 		assertThat(actual).extracting("status").doesNotContain(IssueStatus.CLOSE.toString());
 		assertThat(actual).extracting("author.id").contains(testUserId);
+	}
+
+	@Test
+	@DisplayName("마일스톤 없는 이슈 조회 요청은 이슈의 마일스톤이 null값 조회를 확인한다.")
+	void issueWithOutMilestone_find_milestoneIsNull() {
+		List<Issue> actual = issueRepository.findByMilestoneIsNull();
+
+		assertThat(actual).extracting("status").contains(IssueStatus.OPEN.toString());
+		assertThat(actual).extracting("milestone").containsOnlyNulls();
 	}
 }
