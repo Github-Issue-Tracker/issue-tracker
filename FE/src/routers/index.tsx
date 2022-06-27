@@ -1,6 +1,4 @@
-import { lazy, Suspense } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoadingProgress from "@/components/common/LoadingProgress";
@@ -16,23 +14,36 @@ import ButtonTest from "@/test-pages/ButtonTest";
 import DropdownTest from "@/test-pages/DropdownTest";
 import ListLayoutTest from "@/test-pages/ListLayoutTest";
 
+const LazyHome = lazy(() => import("@/pages/Home"));
+const LazyIssueDetail = lazy(() => import("@/pages/IssueDetail"));
+const LazyIssueList = lazy(() => import("@/pages/IssueList"));
+const LazyIssueRegister = lazy(() => import("@/pages/IssueRegister"));
+const LazyLabel = lazy(() => import("@/pages/Label"));
+const LazyLogin = lazy(() => import("@/pages/Login"));
+const LazyMilestone = lazy(() => import("@/pages/Milestone"));
+const LazyNotFound = lazy(() => import("@/pages/NotFound"));
+
+const LazyButtonTest = lazy(() => import("@/test-pages/ButtonTest"));
+const LazyDropdownTest = lazy(() => import("@/test-pages/DropdownTest"));
+const LazyListLayoutTest = lazy(() => import("@/test-pages/ListLayoutTest"));
+
 const Routers = ({ isOAuth }: { isOAuth: boolean }) => {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path="/" element={isOAuth ? <Home /> : <Login />}>
-          <Route index element={<IssueList />} />
-          <Route path="/issue-detail" element={<IssueDetail />} />
-          <Route path="/issue-register" element={<IssueRegister />} />
-          <Route path="/label" element={<Label />} />
-          <Route path="/milestone" element={<Milestone />} />
+        <Route path="/" element={isOAuth ? <LazyHome /> : <LazyLogin />}>
+          <Route index element={<LazyIssueList />} />
+          <Route path="/issue-detail" element={<LazyIssueDetail />} />
+          <Route path="/issue-register" element={<LazyIssueRegister />} />
+          <Route path="/label" element={<LazyLabel />} />
+          <Route path="/milestone" element={<LazyMilestone />} />
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/login" element={<LazyLogin />} />
+        <Route path="*" element={<LazyNotFound />} />
 
-        <Route path="/ButtonTest" element={<ButtonTest />} />
-        <Route path="/DropdownTest" element={<DropdownTest />} />
-        <Route path="/ListLayoutTest" element={<ListLayoutTest />} />
+        <Route path="/ButtonTest" element={<LazyButtonTest />} />
+        <Route path="/DropdownTest" element={<LazyDropdownTest />} />
+        <Route path="/ListLayoutTest" element={<LazyListLayoutTest />} />
       </Routes>
     </BrowserRouter>
   );

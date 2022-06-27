@@ -40,12 +40,12 @@ const Icon = ({ type, strokecolor, fillcolor }: IconProps) => {
 
 const StyledSVGIcon = styled(SVG)<Pick<IconProps, "strokecolor" | "fillcolor">>`
   fill: ${({ fillcolor }) => fillcolor || "none"};
-  svg {
+  * {
     fill: ${({ fillcolor }) => fillcolor || "none"};
   }
 
   stroke: ${({ strokecolor }) => strokecolor || COLOR["gray-900"]};
-  path {
+  * {
     stroke: ${({ strokecolor }) => strokecolor || COLOR["gray-900"]};
   }
 `;

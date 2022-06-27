@@ -34,7 +34,7 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    // 요청 에러 직전
+    // 응답 에러 직전
     console.error(error);
     return Promise.reject(error);
   }
