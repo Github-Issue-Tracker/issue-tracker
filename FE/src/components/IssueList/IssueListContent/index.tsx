@@ -58,7 +58,7 @@ const IssueListContent = () => {
   return (
     <S.Container>
       {/* <button onClick={() => handleEditIssueList({ issueId: [1, 2], status: "OPEN" })}>수정하기</button> */}
-      <ListLayout width={1280} titleComponent={<IssueListFilter />} listComponents={IssueListComponents} />;
+      <ListLayout width={1280} titleComponent={<IssueListFilter />} listComponents={IssueListComponents} />
     </S.Container>
   );
 };

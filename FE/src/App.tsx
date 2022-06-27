@@ -1,24 +1,20 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from "recoil";
+import { RecoilRoot } from "recoil";
 
-import LoadingProgress from "@/components/common/LoadingProgress";
+import Spinner from "@/components/common/Spinner";
 import Routers from "@/routers";
 
 const App = () => {
-  // FIXME 임시 OAuth
+  // FIXME: 임시 OAuth
   const isOAuth = true;
 
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         suspense: false,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-        retry: false,
-        staleTime: 5 * 60 * 1000,
+        enabled: false,
       },
     },
   });
@@ -26,7 +22,7 @@ const App = () => {
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<LoadingProgress />}>
+        <Suspense fallback={<Spinner />}>
           <Routers isOAuth={isOAuth} />
         </Suspense>
         <ReactQueryDevtools initialIsOpen={false} />
