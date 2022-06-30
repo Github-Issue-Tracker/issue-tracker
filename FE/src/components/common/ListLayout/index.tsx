@@ -2,8 +2,8 @@ import * as S from "@/components/common/ListLayout/style";
 
 export type ListLayoutProps = {
   width: number;
-  titleComponent?: JSX.Element;
-  listComponents?: JSX.Element[];
+  titleComponent?: React.ReactNode;
+  listComponents?: React.ReactNode;
 };
 
 const ListLayout = ({ width, titleComponent, listComponents }: ListLayoutProps) => {

@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { useRecoilValue } from "recoil";
 
+import API from "@/apis";
+import { PatchIssueStatusType } from "@/apis/type";
 import DropdownMenu from "@/components/common/DropdownMenu";
 import Icon from "@/components/common/Icon";
+import { issueCheck } from "@/recoil/issueList";
 
 import * as S from "./style";
 
 const IssueStatusFilter = () => {
-  const [issueFilter, setIssueFilter] = useState(null);
+  const checkedIssueId = useRecoilValue(issueCheck);
 
-  const FilterListTemplate = [{ name: "선택한 이슈 열기" }, { name: "선택한 이슈 닫기" }];
+  const queryClient = useQueryClient();
+
+  const { data, mutate: setIssueStatus } = useMutation(API.patchIssueStatus, {
+    onSuccess() {
+      queryClient.invalidateQueries(["issues"]);
+    },
+  });
+
+  console.log("editIssueList :>> ", data);
+
+  const FilterListTemplate = [
+    { name: "선택한 이슈 열기", action: "OPEN" },
+    { name: "선택한 이슈 닫기", action: "CLOSE" },
+  ];
 
   const FilterButton = (
     <S.FilterButton>
@@ -19,11 +37,13 @@ const IssueStatusFilter = () => {
 
   const FilterTitle = <S.FilterTitle>상태 변경</S.FilterTitle>;
 
-  const FilterListComponents = FilterListTemplate?.map(({ name }, idx) => {
-    const handleClickFilter = () => {};
+  const FilterListComponents = FilterListTemplate?.map(({ name, action }, idx) => {
+    const handleSetIssueStatus = () => {
+      setIssueStatus({ issueIds: Array.from(checkedIssueId), status: action as "OPEN" | "CLOSE" });
+    };
 
     return (
-      <S.FilterList key={idx} onClick={handleClickFilter}>
+      <S.FilterList key={name + idx} onClick={handleSetIssueStatus}>
         <span>{name}</span>
       </S.FilterList>
     );

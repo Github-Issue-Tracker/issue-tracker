@@ -15,6 +15,7 @@ const App = () => {
       queries: {
         suspense: false,
         enabled: false,
+        refetchOnWindowFocus: false,
       },
     },
   });

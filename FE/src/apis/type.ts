@@ -12,9 +12,9 @@ export type IssueType = {
 };
 
 export type LabelType = {
-  labelId: string;
+  labelId?: string;
   name: string;
-  description: string;
+  description?: string;
   backgroundColor: string;
   fontColor: "BRIGHT" | "DARK";
 };
@@ -30,6 +30,6 @@ export type MilestoneType = {
 };
 
 export type PatchIssueStatusType = {
-  issueId: number[];
+  issueIds: number[];
   status: "OPEN" | "CLOSE";
 };

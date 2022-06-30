@@ -1,14 +1,22 @@
-import { AxiosRequestConfig } from "axios";
+import { AxiosPromise, AxiosRequestConfig } from "axios";
 
 import newAxios from "@/apis/core";
 
 import type { PatchIssueStatusType, IssueType } from "@/apis/type";
 
 const API = {
-  getIssueList: (config?: AxiosRequestConfig) => {
+  getIssueList: (config?: AxiosRequestConfig): AxiosPromise<IssueType[]> => {
     return newAxios({
       method: "get",
       url: "/api/issue-tracker/issues/",
+      ...config,
+    });
+  },
+
+  getCloseIssueList: (config?: AxiosRequestConfig): AxiosPromise<IssueType[]> => {
+    return newAxios({
+      method: "get",
+      url: "/api/issue-tracker/issues/close",
       ...config,
     });
   },

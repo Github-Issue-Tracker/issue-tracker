@@ -1,6 +1,8 @@
-import { memo } from "react";
+import { memo, useState } from "react";
+import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 
+import API from "@/apis";
 import CheckBox from "@/components/common/CheckBox";
 import FilterButton from "@/components/common/FilterButton";
 import Icon from "@/components/common/Icon";
@@ -16,10 +18,23 @@ import * as S from "./style";
 
 type IssueListFilterType = {
   isAllCheck: boolean;
-  issueNumberList: number[];
+  issueNumberList: number[] | undefined;
+  handleOpenIssue: () => void;
+  handleCloseIssue: () => void;
+  fetchOpenIssue: () => void;
+  fetchCloseIssue: () => void;
+  isOpenIssue: boolean;
 };
 
-const IssueListFilter = ({ isAllCheck, issueNumberList }: IssueListFilterType) => {
+const IssueListFilter = ({
+  isAllCheck,
+  issueNumberList,
+  handleOpenIssue,
+  handleCloseIssue,
+  fetchOpenIssue,
+  fetchCloseIssue,
+  isOpenIssue,
+}: IssueListFilterType) => {
   const [checks, setChecks] = useRecoilState(issueCheck);
 
   const handleAllCheck = () => {
@@ -32,7 +47,7 @@ const IssueListFilter = ({ isAllCheck, issueNumberList }: IssueListFilterType) =
       setChecks((prev) => {
         prev.clear();
 
-        issueNumberList.forEach((issueNumber) => {
+        issueNumberList?.forEach((issueNumber) => {
           prev.add(issueNumber);
         });
 
@@ -56,19 +71,20 @@ const IssueListFilter = ({ isAllCheck, issueNumberList }: IssueListFilterType) =
         <>
           <FilterButton
             text="열린 이슈"
-            state="(2)"
             isIconFirst={true}
-            svgIcon={<Icon type="alertCircle" strokecolor={COLOR["black-400"]} />}
-            color={COLOR["black-400"]}
+            svgIcon={<Icon type="alertCircle" strokecolor={isOpenIssue ? COLOR["black-400"] : COLOR["gray-900"]} />}
+            color={isOpenIssue ? COLOR["black-400"] : COLOR["gray-900"]}
             fontWeight={FONTWEIGHT.bold}
+            onClick={handleOpenIssue}
           />
           <FilterButton
             text="닫힌 이슈"
-            state="(4)"
             isIconFirst={true}
-            svgIcon={<Icon type="archive" />}
+            svgIcon={<Icon type="archive" strokecolor={!isOpenIssue ? COLOR["black-400"] : COLOR["gray-900"]} />}
+            color={!isOpenIssue ? COLOR["black-400"] : COLOR["gray-900"]}
             fontWeight={FONTWEIGHT.bold}
             style={{ marginLeft: "24rem" }}
+            onClick={handleCloseIssue}
           />
           <S.FilterBox>
             <AssigneeFilter />
