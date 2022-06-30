@@ -2,15 +2,20 @@ import { ChangeEvent, useState } from "react";
 
 import * as S from "./style";
 
-const CheckBox = ({ ...rest }) => {
-  const [isChecked, setIsChecked] = useState(false);
+type CheckBoxType = {
+  checkList?: Set<number>;
+  isChecked?: boolean;
+  onClick?: () => void;
+};
 
-  const handleClickChecked = (e: ChangeEvent<HTMLInputElement>) => {
-    e.stopPropagation();
-    setIsChecked(e.target.checked);
+const CheckBox = ({ checkList, isChecked, onClick, ...rest }: CheckBoxType) => {
+  const [check, setCheck] = useState(false);
+
+  const handleChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
+    setCheck(e.target.checked);
   };
 
-  return <S.Input type="checkbox" checked={isChecked} onChange={handleClickChecked} {...rest} />;
+  return <S.Input type="checkbox" checked={isChecked} onClick={onClick} onChange={handleChangeCheck} {...rest} />;
 };
 
 export default CheckBox;

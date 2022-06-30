@@ -1,40 +1,83 @@
+import { memo } from "react";
+import { useRecoilState } from "recoil";
+
+import CheckBox from "@/components/common/CheckBox";
 import FilterButton from "@/components/common/FilterButton";
 import Icon from "@/components/common/Icon";
 import AssigneeFilter from "@/components/IssueList/IssueListContent/IssueListFilter/AssigneeFilter";
+import IssueStatusFilter from "@/components/IssueList/IssueListContent/IssueListFilter/IssueStatusFilter";
 import LabelFilter from "@/components/IssueList/IssueListContent/IssueListFilter/LabelFilter";
 import MilestoneFilter from "@/components/IssueList/IssueListContent/IssueListFilter/MilestoneFilter";
 import WriterFilter from "@/components/IssueList/IssueListContent/IssueListFilter/WriterFilter";
+import { issueCheck } from "@/recoil/issueList";
 import { COLOR, FONTWEIGHT } from "@/styles/constTheme";
 
 import * as S from "./style";
 
-const IssueListFilter = () => {
-  // 전체체크박스
+type IssueListFilterType = {
+  isAllCheck: boolean;
+  issueNumberList: number[];
+};
+
+const IssueListFilter = ({ isAllCheck, issueNumberList }: IssueListFilterType) => {
+  const [checks, setChecks] = useRecoilState(issueCheck);
+
+  const handleAllCheck = () => {
+    if (isAllCheck) {
+      setChecks((prev) => {
+        prev.clear();
+        return new Set(prev);
+      });
+    } else {
+      setChecks((prev) => {
+        prev.clear();
+
+        issueNumberList.forEach((issueNumber) => {
+          prev.add(issueNumber);
+        });
+
+        return new Set(prev);
+      });
+    }
+    console.log(checks);
+  };
+
   return (
     <S.IssueListFilter>
-      <S.IssueCheckBox />
-      <FilterButton
-        text="열린 이슈"
-        state="(2)"
-        isIconFirst={true}
-        svgIcon={<Icon type="alertCircle" strokecolor={COLOR["black-400"]} />}
-        color={COLOR["black-400"]}
-        fontWeight={FONTWEIGHT.bold}
-      />
-      <FilterButton
-        text="닫힌 이슈"
-        state="(4)"
-        isIconFirst={true}
-        svgIcon={<Icon type="archive" />}
-        fontWeight={FONTWEIGHT.bold}
-        style={{ marginLeft: "24rem" }}
-      />
-      <S.FilterBox>
-        <AssigneeFilter />
-        <LabelFilter />
-        <MilestoneFilter />
-        <WriterFilter />
-      </S.FilterBox>
+      <S.IssueCheckBox isChecked={isAllCheck} checkList={checks} onClick={handleAllCheck} />
+      {checks.size ? (
+        <>
+          <S.IssueCountTemplate>{checks.size}개 이슈 선택</S.IssueCountTemplate>
+          <S.FilterBox>
+            <IssueStatusFilter />
+          </S.FilterBox>
+        </>
+      ) : (
+        <>
+          <FilterButton
+            text="열린 이슈"
+            state="(2)"
+            isIconFirst={true}
+            svgIcon={<Icon type="alertCircle" strokecolor={COLOR["black-400"]} />}
+            color={COLOR["black-400"]}
+            fontWeight={FONTWEIGHT.bold}
+          />
+          <FilterButton
+            text="닫힌 이슈"
+            state="(4)"
+            isIconFirst={true}
+            svgIcon={<Icon type="archive" />}
+            fontWeight={FONTWEIGHT.bold}
+            style={{ marginLeft: "24rem" }}
+          />
+          <S.FilterBox>
+            <AssigneeFilter />
+            <LabelFilter />
+            <MilestoneFilter />
+            <WriterFilter />
+          </S.FilterBox>
+        </>
+      )}
     </S.IssueListFilter>
   );
 };
