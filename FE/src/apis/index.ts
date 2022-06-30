@@ -1,32 +1,39 @@
-import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
 
-import instance from "@/apis/interceptors";
-import { IssueType } from "@/apis/type";
+import newAxios from "@/apis/core";
 
-import type { PatchIssueStatusType } from "@/apis/type";
-
-const headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Content-Type": "application/json",
-};
+import type { PatchIssueStatusType, IssueType } from "@/apis/type";
 
 const API = {
   getIssueList: (config?: AxiosRequestConfig) => {
-    return instance({
+    return newAxios({
       method: "get",
       url: "/api/issue-tracker/issues/",
-      headers,
       ...config,
-      // withCredentials: true,
     });
   },
 
   patchIssueStatus: (data: PatchIssueStatusType, config?: AxiosRequestConfig) => {
-    return instance({
+    return newAxios({
       method: "patch",
       url: "/api/issue-tracker/issues/status/",
       data: data,
-      headers,
+      ...config,
+    });
+  },
+
+  getLabelList: (config?: AxiosRequestConfig) => {
+    return newAxios({
+      method: "get",
+      url: "/api/issue-tracker/labels",
+      ...config,
+    });
+  },
+
+  getMilestoneList: (config?: AxiosRequestConfig) => {
+    return newAxios({
+      method: "get",
+      url: "/api/issue-tracker/milestones/list",
       ...config,
     });
   },
