@@ -7,7 +7,7 @@ import { COLOR, FONTSIZE, FONTWEIGHT } from "@/styles/constTheme";
 
 import * as S from "./style";
 
-const IssueRedirectOptionBox = () => {
+const Header = () => {
   const handleClick = () => {};
   return (
     <S.Container>
@@ -40,10 +40,10 @@ const IssueRedirectOptionBox = () => {
 
       <Button onClick={handleClick} width={120} fontSize={FONTSIZE.XS}>
         <Icon type="plus" strokecolor={COLOR["white-400"]} />
-        이슈 작성
+        추가
       </Button>
     </S.Container>
   );
 };
 
-export default IssueRedirectOptionBox;
+export default Header;
