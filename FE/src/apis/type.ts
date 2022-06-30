@@ -2,7 +2,7 @@ export type IssueType = {
   issueId: number;
   issueNumber: number;
   issueTitle: string;
-  content: string;
+  content?: string;
   issueStatus: string;
   createdAt: string;
   milestoneTitle: string;

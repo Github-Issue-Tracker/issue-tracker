@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
 import CheckBox from "@/components/common/CheckBox";
-import { FONTSIZE } from "@/styles/constTheme";
+import { COLOR, FONTSIZE } from "@/styles/constTheme";
 
 export const IssueListFilter = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 18rem 30rem 18rem 32rem;
   height: 64rem;
+`;
+
+export const IssueCountTemplate = styled.span`
+  color: ${COLOR["gray-900"]};
 `;
 
 export const IssueCheckBox = styled(CheckBox)`
