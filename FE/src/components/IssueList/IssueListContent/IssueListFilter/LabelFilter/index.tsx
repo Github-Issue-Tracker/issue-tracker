@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
 
+import API from "@/apis/index";
+import { LabelType } from "@/apis/type";
 import DropdownMenu from "@/components/common/DropdownMenu";
 import Icon from "@/components/common/Icon";
 
@@ -8,11 +11,7 @@ import * as S from "./style";
 const LabelFilter = () => {
   const [issueFilter, setIssueFilter] = useState(null);
 
-  const FilterListTemplate = [
-    { name: "레이블이 없는 이슈" },
-    { name: "feature", backgroundColor: "#2f69dd" },
-    { name: "bug", backgroundColor: "#dc4a4a" },
-  ];
+  const { isLoading, data } = useQuery("issue-labels", API.getLabelList);
 
   const FilterButton = (
     <>
@@ -23,14 +22,24 @@ const LabelFilter = () => {
 
   const FilterTitle = <S.FilterTitle>레이블 필터</S.FilterTitle>;
 
-  const FilterListComponents = FilterListTemplate?.map(({ name, backgroundColor }, idx) => {
-    const handleClickFilter = () => {};
+  const FilterListComponents = data?.data.map((el: LabelType) => {
+    const handleClickFilter = () => {
+      /**
+       * TODO:
+       * - search filter state에 value 전달
+       * - drop down menu 끄기
+       */
+    };
+
+    if (isLoading) {
+      return <h2>Loading...</h2>;
+    }
 
     return (
-      <S.FilterList key={idx} onClick={handleClickFilter}>
+      <S.FilterList key={el.labelId} onClick={handleClickFilter}>
         <S.FrontBox>
-          {backgroundColor && <Icon type="colorCircle" fillcolor={backgroundColor} />}
-          <span>{name}</span>
+          {el.backgroundColor && <Icon type="colorCircle" fillcolor={el.backgroundColor} />}
+          <span>{el.name}</span>
         </S.FrontBox>
         {issueFilter ? <Icon type="checkRadioButton" /> : <Icon type="emptyRadioButton" />}
       </S.FilterList>
