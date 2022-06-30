@@ -6,15 +6,27 @@ export type IssueType = {
   issueStatus: string;
   createdAt: string;
   milestoneTitle: string;
-  labels: MilestoneType[];
+  labels: LabelType[];
   author: string;
   authorImage: string;
 };
 
-export type MilestoneType = {
+export type LabelType = {
+  labelId: string;
   name: string;
+  description: string;
   backgroundColor: string;
   fontColor: "BRIGHT" | "DARK";
+};
+
+export type MilestoneType = {
+  id: number;
+  title: string;
+  description: string;
+  completionDate: string;
+  // name: string;
+  // backgroundColor: string;
+  // fontColor: "BRIGHT" | "DARK";
 };
 
 export type PatchIssueStatusType = {
