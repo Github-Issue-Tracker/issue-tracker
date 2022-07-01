@@ -38,10 +38,28 @@ const API = {
     });
   },
 
+  // postCreateLabel: (data: ,config?: AxiosRequestConfig)=> {
+  //   return newAxios({
+  //     method:"post",
+  //     url:"​/api​/issue-tracker​/labels",
+  //     data:data,
+  //     ...config,
+  //   })
+
+  // }
+
   getMilestoneList: (config?: AxiosRequestConfig) => {
     return newAxios({
       method: "get",
       url: "/api/issue-tracker/milestones/list",
+      ...config,
+    });
+  },
+
+  getSearchFilter: (query: string, config?: AxiosRequestConfig) => {
+    return newAxios({
+      method: "get",
+      url: "/api/issue-tracker/issues/search?q=" + query,
       ...config,
     });
   },

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
 
 import { AccountImg } from "@/components/common/AccountImg";
 import DropdownMenu from "@/components/common/DropdownMenu";
@@ -8,12 +9,15 @@ import * as S from "./style";
 
 const AssigneeFilter = () => {
   const [issueFilter, setIssueFilter] = useState(null);
+  const { data: assigneeData, refetch: fetchAssignee } = useQuery(["assignee"], {
+    enabled: false,
+  });
 
   const FilterListTemplate = [
-    { name: "담당자가 없는 이슈" },
-    { name: "Jwu", accountImage: "https://avatars.githubusercontent.com/u/72546335?v=4" },
-    { name: "Sally", accountImage: "https://avatars.githubusercontent.com/u/96989782?v=4" },
-    { name: "Oliver", accountImage: "https://avatars.githubusercontent.com/u/84956036?v=4" },
+    { name: "담당자가 없는 이슈", query: "none" },
+    { name: "Jwu", accountImage: "https://avatars.githubusercontent.com/u/72546335?v=4", query: "Jwu" },
+    { name: "Sally", accountImage: "https://avatars.githubusercontent.com/u/96989782?v=4", query: "Sally" },
+    { name: "Oliver", accountImage: "https://avatars.githubusercontent.com/u/84956036?v=4", query: "Oliver" },
   ];
 
   const FilterButton = (

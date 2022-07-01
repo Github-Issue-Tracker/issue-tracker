@@ -11,7 +11,7 @@ import IssueStatusFilter from "@/components/IssueList/IssueListContent/IssueList
 import LabelFilter from "@/components/IssueList/IssueListContent/IssueListFilter/LabelFilter";
 import MilestoneFilter from "@/components/IssueList/IssueListContent/IssueListFilter/MilestoneFilter";
 import WriterFilter from "@/components/IssueList/IssueListContent/IssueListFilter/WriterFilter";
-import { issueCheck } from "@/recoil/issueList";
+import { issueCheck } from "@/recoil/issueList/atom";
 import { COLOR, FONTWEIGHT } from "@/styles/constTheme";
 
 import * as S from "./style";

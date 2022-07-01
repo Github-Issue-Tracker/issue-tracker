@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
+import { useRecoilState } from "recoil";
 
 import DropdownMenu from "@/components/common/DropdownMenu/index";
 import Icon from "@/components/common/Icon";
 import InputBox from "@/components/common/InputBox";
+import { searchInputAtom } from "@/recoil/searchFilter/atom";
 import { COLOR, FONTWEIGHT } from "@/styles/constTheme";
 
 import * as S from "./style";
 
 const IssueSearchFilter = () => {
   const [issueFilter, setIssueFilter] = useState(null);
+  const [searchInput, setSearchInput] = useRecoilState(searchInputAtom);
 
   const FilterListTemplate = [
     "열린 이슈",
@@ -38,6 +41,10 @@ const IssueSearchFilter = () => {
     );
   });
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(event.target.value);
+  };
+
   return (
     <S.FilterContainer>
       <DropdownMenu
@@ -50,7 +57,8 @@ const IssueSearchFilter = () => {
       <S.InputContainer>
         <Icon type="searchIcon" />
         <InputBox
-          defaultValue="is:issue is:open"
+          value={searchInput}
+          onChange={handleChange}
           placeholder="Search all issues"
           color={COLOR["gray-700"]}
           maxLength={50}

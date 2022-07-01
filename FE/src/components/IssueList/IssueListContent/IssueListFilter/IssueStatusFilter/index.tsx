@@ -6,7 +6,7 @@ import API from "@/apis";
 import { PatchIssueStatusType } from "@/apis/type";
 import DropdownMenu from "@/components/common/DropdownMenu";
 import Icon from "@/components/common/Icon";
-import { issueCheck } from "@/recoil/issueList";
+import { issueCheck } from "@/recoil/issueList/atom";
 
 import * as S from "./style";
 

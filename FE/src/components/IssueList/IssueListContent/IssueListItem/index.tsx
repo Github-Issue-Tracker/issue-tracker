@@ -6,7 +6,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { IssueType } from "@/apis/type";
 import Icon from "@/components/common/Icon";
 import Label from "@/components/common/Label";
-import { issueCheck } from "@/recoil/issueList";
+import { issueCheck } from "@/recoil/issueList/atom";
 import { COLOR } from "@/styles/constTheme";
 import { timeStampInfoTemplate } from "@/utils";
 

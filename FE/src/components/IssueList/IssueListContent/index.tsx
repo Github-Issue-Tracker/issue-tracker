@@ -7,7 +7,7 @@ import { IssueType, PatchIssueStatusType } from "@/apis/type";
 import ListLayout from "@/components/common/ListLayout";
 import IssueListFilter from "@/components/IssueList/IssueListContent/IssueListFilter";
 import IssueListItem from "@/components/IssueList/IssueListContent/IssueListItem";
-import { issueCheck } from "@/recoil/issueList";
+import { issueCheck } from "@/recoil/issueList/atom";
 
 import * as S from "./style";
 
