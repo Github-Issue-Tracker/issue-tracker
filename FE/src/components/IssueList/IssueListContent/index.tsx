@@ -13,8 +13,8 @@ import * as S from "./style";
 
 const IssueListContent = () => {
   const [isOpenIssue, setIsOpenIssue] = useState<boolean>(true);
-  const [issueList, setIssueList] = useState([] as IssueType[] | undefined);
   const checks = useRecoilValue(issueCheck);
+  const [issueList, setIssueList] = useState([] as IssueType[] | undefined);
 
   const { data: openIssueList, refetch: fetchOpenIssue } = useQuery(["issues", "open"], API.getIssueList, {
     enabled: true,
@@ -35,11 +35,15 @@ const IssueListContent = () => {
     setIssueList(closeIssueList?.data);
   };
 
-  console.log("issueList :>> ", issueList);
+  useEffect(() => {
+    setIssueList(openIssueList?.data);
+  }, [openIssueList?.data]);
 
   const isAllCheck = useMemo(() => checks.size === issueList?.length, [checks.size, issueList?.length]);
 
   const issueNumberList = useMemo(() => issueList?.map(({ issueNumber }) => issueNumber), [issueList]);
+
+  console.log("issueList :>> ", issueList);
 
   const IssueListComponents = issueList?.map((issueInfo: IssueType) => {
     return <IssueListItem key={issueInfo.issueId} {...issueInfo} />;

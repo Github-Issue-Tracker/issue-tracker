@@ -31,8 +31,6 @@ const IssueListFilter = ({
   issueNumberList,
   handleOpenIssue,
   handleCloseIssue,
-  fetchOpenIssue,
-  fetchCloseIssue,
   isOpenIssue,
 }: IssueListFilterType) => {
   const [checks, setChecks] = useRecoilState(issueCheck);
@@ -64,7 +62,7 @@ const IssueListFilter = ({
         <>
           <S.IssueCountTemplate>{checks.size}개 이슈 선택</S.IssueCountTemplate>
           <S.FilterBox>
-            <IssueStatusFilter />
+            <IssueStatusFilter handleOpenIssue={handleOpenIssue} />
           </S.FilterBox>
         </>
       ) : (

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import API from "@/apis";
 import { PatchIssueStatusType } from "@/apis/type";
@@ -10,8 +10,12 @@ import { issueCheck } from "@/recoil/issueList";
 
 import * as S from "./style";
 
-const IssueStatusFilter = () => {
-  const checkedIssueId = useRecoilValue(issueCheck);
+type IssueStatusType = {
+  handleOpenIssue: () => void;
+};
+
+const IssueStatusFilter = ({ handleOpenIssue }: IssueStatusType) => {
+  const [checkedIssueId, setCheckedIssueId] = useRecoilState(issueCheck);
 
   const queryClient = useQueryClient();
 
@@ -23,7 +27,7 @@ const IssueStatusFilter = () => {
 
   console.log("editIssueList :>> ", data);
 
-  const FilterListTemplate = [
+  const FilterListTemplate: { name: string; action: "OPEN" | "CLOSE" }[] = [
     { name: "선택한 이슈 열기", action: "OPEN" },
     { name: "선택한 이슈 닫기", action: "CLOSE" },
   ];
@@ -39,8 +43,16 @@ const IssueStatusFilter = () => {
 
   const FilterListComponents = FilterListTemplate?.map(({ name, action }, idx) => {
     const handleSetIssueStatus = () => {
-      setIssueStatus({ issueIds: Array.from(checkedIssueId), status: action as "OPEN" | "CLOSE" });
+      setIssueStatus({ issueIds: Array.from(checkedIssueId), status: action });
+
+      setCheckedIssueId((checkBoxes) => {
+        checkBoxes.clear();
+        return checkBoxes;
+      });
+
+      handleOpenIssue();
     };
+    console.log("checkedIssueId :>> ", checkedIssueId);
 
     return (
       <S.FilterList key={name + idx} onClick={handleSetIssueStatus}>
