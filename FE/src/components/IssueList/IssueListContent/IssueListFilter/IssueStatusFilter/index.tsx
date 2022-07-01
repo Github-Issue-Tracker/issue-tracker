@@ -25,8 +25,6 @@ const IssueStatusFilter = ({ handleOpenIssue }: IssueStatusType) => {
     },
   });
 
-  console.log("editIssueList :>> ", data);
-
   const FilterListTemplate: { name: string; action: "OPEN" | "CLOSE" }[] = [
     { name: "선택한 이슈 열기", action: "OPEN" },
     { name: "선택한 이슈 닫기", action: "CLOSE" },
@@ -52,7 +50,6 @@ const IssueStatusFilter = ({ handleOpenIssue }: IssueStatusType) => {
 
       handleOpenIssue();
     };
-    console.log("checkedIssueId :>> ", checkedIssueId);
 
     return (
       <S.FilterList key={name + idx} onClick={handleSetIssueStatus}>

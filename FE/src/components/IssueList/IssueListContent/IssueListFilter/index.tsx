@@ -52,7 +52,6 @@ const IssueListFilter = ({
         return new Set(prev);
       });
     }
-    console.log(checks);
   };
 
   return (

@@ -23,13 +23,11 @@ const IssueListContent = () => {
   const { data: closeIssueList, refetch: fetchCloseIssue } = useQuery(["issues", "close"], API.getCloseIssueList, {});
 
   const handleOpenIssue = () => {
-    console.log("열린이슈");
     fetchOpenIssue();
     setIsOpenIssue(true);
     setIssueList(openIssueList?.data);
   };
   const handleCloseIssue = () => {
-    console.log("닫힌이슈");
     fetchCloseIssue();
     setIsOpenIssue(false);
     setIssueList(closeIssueList?.data);
@@ -42,8 +40,6 @@ const IssueListContent = () => {
   const isAllCheck = useMemo(() => checks.size === issueList?.length, [checks.size, issueList?.length]);
 
   const issueNumberList = useMemo(() => issueList?.map(({ issueNumber }) => issueNumber), [issueList]);
-
-  console.log("issueList :>> ", issueList);
 
   const IssueListComponents = issueList?.map((issueInfo: IssueType) => {
     return <IssueListItem key={issueInfo.issueId} {...issueInfo} />;
