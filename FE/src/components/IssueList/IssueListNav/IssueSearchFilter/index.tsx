@@ -1,6 +1,8 @@
 import { useState, ChangeEvent } from "react";
+import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 
+import API from "@/apis";
 import DropdownMenu from "@/components/common/DropdownMenu/index";
 import Icon from "@/components/common/Icon";
 import InputBox from "@/components/common/InputBox";
@@ -12,6 +14,15 @@ import * as S from "./style";
 const IssueSearchFilter = () => {
   const [issueFilter, setIssueFilter] = useState(null);
   const [searchInput, setSearchInput] = useRecoilState(searchInputAtom);
+
+  // const { data: searchData, refetch: fetchSearch } = useQuery(
+  //   ["issueFilter", "search"],
+  //   // @ts-ignore
+  //   API.getSearchFilter(searchInput),
+  //   {
+  //     enabled: false,
+  //   }
+  // );
 
   const FilterListTemplate = [
     "열린 이슈",
@@ -45,6 +56,11 @@ const IssueSearchFilter = () => {
     setSearchInput(event.target.value);
   };
 
+  const handleSubmitSearch = () => {
+    // fetchSearch();
+    // console.log(searchData);
+  };
+
   return (
     <S.FilterContainer>
       <DropdownMenu
@@ -59,6 +75,7 @@ const IssueSearchFilter = () => {
         <InputBox
           value={searchInput}
           onChange={handleChange}
+          onSubmit={handleSubmitSearch}
           placeholder="Search all issues"
           color={COLOR["gray-700"]}
           maxLength={50}

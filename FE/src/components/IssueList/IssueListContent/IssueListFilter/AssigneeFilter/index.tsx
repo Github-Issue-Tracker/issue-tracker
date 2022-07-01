@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
 
 import { AccountImg } from "@/components/common/AccountImg";
 import DropdownMenu from "@/components/common/DropdownMenu";
 import Icon from "@/components/common/Icon";
+import { searchInputAtom } from "@/recoil/searchFilter/atom";
 
 import * as S from "./style";
 
 const AssigneeFilter = () => {
   const [issueFilter, setIssueFilter] = useState(null);
-  const { data: assigneeData, refetch: fetchAssignee } = useQuery(["assignee"], {
-    enabled: false,
-  });
+  const [searchInput, setSearchInput] = useRecoilState(searchInputAtom);
 
   const FilterListTemplate = [
     { name: "담당자가 없는 이슈", query: "none" },
@@ -29,8 +29,10 @@ const AssigneeFilter = () => {
 
   const FilterTitle = <S.FilterTitle>담당자 필터</S.FilterTitle>;
 
-  const FilterListComponents = FilterListTemplate?.map(({ name, accountImage }, idx) => {
-    const handleClickFilter = () => {};
+  const FilterListComponents = FilterListTemplate?.map(({ name, accountImage, query }, idx) => {
+    const handleClickFilter = () => {
+      setSearchInput((prev) => `${prev} assignee:${query}`);
+    };
 
     return (
       <S.FilterList key={idx} onClick={handleClickFilter}>

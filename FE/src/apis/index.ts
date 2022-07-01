@@ -59,7 +59,7 @@ const API = {
   getSearchFilter: (query: string, config?: AxiosRequestConfig) => {
     return newAxios({
       method: "get",
-      url: "/api/issue-tracker/issues/search?q=" + query,
+      url: "/api/issue-tracker/issues/search?q=" + encodeURIComponent(query),
       ...config,
     });
   },
